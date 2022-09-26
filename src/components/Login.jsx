@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import "./Login.scss";
 const Login = () => {
   const [invisible, setInvisible] = useState("p-form__warning--visible");
-  const [checkName, setCheckName] = useState(false);
-  const [checkPass, setCheckPass] = useState(false);
+  const [checkName, setCheckName] = useState("");
+  const [checkPass, setCheckPass] = useState("");
 
   useEffect(() => {
-    if (checkName === false || checkPass === false) {
-      setInvisible("p-form__warning--invisible");
-    }
+    if (checkName == "" || checkPass == "") {
+      setInvisible("p-form__warning--visible");
+    } else setInvisible("p-form__warning--invisible");
   }, [checkName, checkPass]);
   return (
     <div className="p-login">
@@ -19,15 +19,17 @@ const Login = () => {
           placeholder="username"
           className="p-form__input-1"
           type="text"
-          onChange={(e) => setCheckName(true)}
+          value={checkName}
+          onChange={(e) => setCheckName(e.target.value)}
         />
         <input
           placeholder="password"
           type="password"
           className="p-form__input-2"
-          onChange={(e) => setCheckPass(true)}
+          value={checkPass}
+          onChange={(e) => setCheckPass(e.target.value)}
         />
-        <button className="p-form__button" disabled>
+        <button className="p-form__button" disabled={!checkName || !checkPass}>
           Login
         </button>
         <span
